@@ -1,0 +1,19 @@
+.__button {
+  width: fit-content;
+  & button {
+    font-size: 100px;
+    padding: 50px;
+    font-family: "Press Start 2P", sans-serif;
+    background-color: var(--dark-color);
+    cursor: pointer;
+    border: solid 10px var(--bright-color);
+    color: var(--bright-color);
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      box-shadow: 0px 0px 50px var(--bright-color);
+      &:active {
+        transform: scale(0.5);
+      }
+    }
+  }
+}

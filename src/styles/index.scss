@@ -1,0 +1,31 @@
+.container {
+  width: 1200px;
+  margin: 0 auto;
+}
+.app {
+  background: url(../../public/pixelated-bg.jpg);
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  position: relative;
+}
+.credit {
+  padding: 0 20px 0 0;
+  position: absolute;
+  color: var(--lightest-color);
+  bottom: 2%;
+  right: 2%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  background-color: var(--darkest-color);
+  &:hover {
+    color: var(--bright-color);
+  }
+  & img {
+    width: 30px;
+    filter: invert(11%) sepia(38%) saturate(6462%) hue-rotate(276deg)
+      brightness(97%) contrast(97%);
+  }
+}

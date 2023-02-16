@@ -1,0 +1,12 @@
+.__input {
+  & input {
+    font-size: 50px;
+    padding: 10px 40px;
+    font-family: "Press Start 2P", sans-serif;
+    border: solid 10px var(--bright-color);
+    outline: none;
+    &:focus {
+      box-shadow: 0px 0px 50px var(--bright-color);
+    }
+  }
+}
