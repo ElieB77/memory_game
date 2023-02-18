@@ -1,9 +1,14 @@
 import styles from "./styles.module.scss";
 
-const Input = () => {
+interface InputProps {
+  placeholder?: string;
+  onChange?: any;
+}
+
+const Input = ({ placeholder, onChange }: InputProps) => {
   return (
     <div className={styles.__input}>
-      <input type="text" placeholder="Entrez votre nom" />
+      <input type="text" placeholder={placeholder} onChange={onChange} />
     </div>
   );
 };

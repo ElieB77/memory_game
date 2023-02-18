@@ -1,0 +1,29 @@
+.__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: red;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  background-color: rgba($color: #000, $alpha: 0.8);
+
+  .__modal {
+    // width: 200px;
+    border-radius: 20px;
+    height: fit-content;
+    background-color: #fff;
+    margin-top: 250px;
+    padding: 30px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    .__buttons {
+      display: flex;
+      gap: 50px;
+    }
+  }
+}

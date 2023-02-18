@@ -1,0 +1,19 @@
+.__progress_bar {
+  width: 640px;
+  height: 50px;
+  background-color: var(--lightest-color);
+  transition: 0.3s;
+  border: solid 5px var(--dark-color);
+  border-radius: 50px;
+  position: relative;
+  overflow: hidden;
+  .__stamp {
+    transition: 0.3s;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background-color: var(--bright-color);
+    min-width: 0.1px;
+    max-width: 100%;
+  }
+}
