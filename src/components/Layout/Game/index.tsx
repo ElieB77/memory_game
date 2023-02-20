@@ -1,32 +1,33 @@
-import Button from "../../UI/Button";
-import Card from "../../UI/Card";
-import ProgressBar from "../../UI/ProgressBar";
 import styles from "./styles.module.scss";
-import type { RootState } from "../../../app/store";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { rendering } from "../../../features/render/renderSlice";
-import Images from "../../../assets/MarioImages";
-
-import MarioLogo from "../../../assets/images/super-mario/super-mario-logo.png";
-import { useEffect, useRef, useState } from "react";
+import Button from "../../UI/Button";
+import ProgressBar from "../../UI/ProgressBar";
+import SuccessModal from "../../Popup/SuccessModal";
 import FailModal from "../../Popup/FailModal";
+import type { RootState } from "../../../app/store";
+import { useSelector, useDispatch } from "react-redux";
+import { rendering } from "../../../redux/render/renderSlice";
+import { useEffect, useState } from "react";
 import {
   setGameStatus,
   setIsTimeUp,
-} from "../../../features/session/sessionSlice";
-import SuccessModal from "../../Popup/SuccessModal";
+} from "../../../redux/session/sessionSlice";
+import Images from "../../../assets/MarioImages";
+import MarioLogo from "../../../assets/images/super-mario/super-mario-logo.png";
 
 const Game = () => {
-  const userName = useSelector((state: RootState) => state.user.userName);
-  const isTimeUp = useSelector((state: RootState) => state.session.isTimeUp);
-  const chrono = useSelector((state: RootState) => state.session.chrono);
-  const status = useSelector((state: RootState) => state.session.status);
-  const score = useSelector((state: RootState) => state.session.score);
-  const bestScore = useSelector((state: RootState) => state.session.bestScore);
-  const [cards, setCards] = useState<any>([...Images, ...Images]);
-  const [active, setActive] = useState<any>({ images: [] });
-  const [flippedIndex, setFlippedIndex] = useState<any>([]);
+  const { userName, isTimeUp, status, score, bestScore } = useSelector(
+    (state: RootState) => ({
+      userName: state.user.userName,
+      isTimeUp: state.session.isTimeUp,
+      chrono: state.session.chrono,
+      status: state.session.status,
+      score: state.session.score,
+      bestScore: state.session.bestScore,
+    })
+  );
+  const [cards, setCards] = useState<any[]>([...Images, ...Images]);
+  const [activeCards, setActiveCards] = useState<any>({ images: [] });
+  const [flippedCards, setFlippedCards] = useState<any>([]);
   const [pairs, setPairs] = useState<any>([]);
   const [firstChoice, setFirstChoice] = useState<any>();
   const [showFailModal, setShowFailModal] = useState<boolean>(false);
@@ -38,51 +39,48 @@ const Game = () => {
   }, [isTimeUp]);
 
   const handleClick = (index: number, image: string) => {
-    setFlippedIndex([...flippedIndex, index]);
-    if (flippedIndex.length === 2) {
-      setFlippedIndex([]);
-    }
+    setFlippedCards([...flippedCards, index]);
 
-    if (active.images.length === 0) {
-      setActive((prevState: { images: any[] }) => ({
+    if (activeCards.images.length === 0) {
+      setActiveCards((prevState: { images: any[] }) => ({
         ...prevState,
         images: [{ image, index }],
       }));
       setFirstChoice(index);
     } else if (
-      active.images.length === 1 &&
-      active.images[0].image === cards[index]
+      activeCards.images.length === 1 &&
+      activeCards.images[0].image === cards[index] &&
+      index !== firstChoice
     ) {
-      if (index !== firstChoice) {
-        setPairs([...pairs, index, firstChoice]);
-        setActive({ images: [] });
-      }
+      setPairs([...pairs, index, firstChoice]);
+      setActiveCards({ images: [] });
     } else {
-      setActive({ images: [] });
+      setActiveCards({ images: [] });
     }
   };
 
   useEffect(() => {
-    const shuffledImages = cards.sort(() => 0.5 - Math.random());
-
-    setCards(
-      shuffledImages.map((image: string) => {
-        return image;
-      })
-    );
-  }, []);
+    if (status === "on") {
+      const shuffledImages = cards.sort(() => 0.5 - Math.random());
+      setCards(
+        shuffledImages.map((image: string) => {
+          return image;
+        })
+      );
+    }
+  }, [status]);
 
   useEffect(() => {
-    if (flippedIndex.length === 2) {
+    if (flippedCards.length === 2) {
       setTimeout(() => {
-        setFlippedIndex([]);
+        setFlippedCards([]);
       }, 1000);
     }
     if (pairs.length === 16) {
       dispatch(setGameStatus("win"));
       setShowSuccessModal(true);
     }
-  }, [flippedIndex, score]);
+  }, [flippedCards, score]);
 
   return (
     <>
@@ -100,16 +98,16 @@ const Game = () => {
             setShowFailModal(false);
             dispatch(setGameStatus("on"));
             dispatch(setIsTimeUp(false));
-            setActive({ images: [] });
+            setActiveCards({ images: [] });
             setPairs([]);
-            setFlippedIndex([]);
+            setFlippedCards([]);
           }}
         />
       )}
 
       {showSuccessModal && (
         <SuccessModal
-          content={`Vous avez gagné ! Votre score est de ${score} `}
+          content={`Vous avez gagné ! Score: ${score !== 0 ? score : "..."} `}
           firstBtnContent="Quitter"
           secondBtnContent="Rejouer"
           firstBtnOnCLick={() => {
@@ -119,29 +117,40 @@ const Game = () => {
           secondBtnOnClick={() => {
             setShowSuccessModal(false);
             dispatch(setGameStatus("on"));
-            setActive({ images: [] });
+            setActiveCards({ images: [] });
             setPairs([]);
-            setFlippedIndex([]);
+            setFlippedCards([]);
           }}
         />
       )}
 
       <div className={styles.__game}>
-        <h1>
-          {userName}
-          {bestScore !== 0 && <h6>Meilleur score: {bestScore}</h6>}
-        </h1>
+        <div className={styles.__head}>
+          <h3>
+            <span>Joueur:</span> {userName}
+          </h3>
+          {bestScore !== 0 && (
+            <>
+              <p>|</p>
+              <h3>
+                <span>Meilleur score:</span> {bestScore}
+              </h3>
+            </>
+          )}
+        </div>
         <div className={styles.__cards_container}>
           {cards.map((image: string, index: number) => {
             return (
               <div
                 key={index}
                 className={`${styles.__card} ${
-                  flippedIndex && flippedIndex.includes(index)
+                  flippedCards && flippedCards.includes(index)
                     ? styles.__flip
                     : ""
-                }  ${flippedIndex.length === 2 ? styles.__disabled : ""} ${
-                  pairs.includes(index) ? styles.__succesful_pair : ""
+                }  ${flippedCards.length === 2 ? styles.__disabled : ""} ${
+                  pairs.includes(index) && status !== "win" && status !== "off"
+                    ? styles.__succesful_pair
+                    : ""
                 }  `}
                 onClick={() => handleClick(index, image)}
               >

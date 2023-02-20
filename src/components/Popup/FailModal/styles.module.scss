@@ -2,7 +2,6 @@
   position: absolute;
   top: 0;
   left: 0;
-  background-color: red;
   width: 100%;
   height: 100%;
   z-index: 999;
@@ -12,6 +11,7 @@
 
   .__modal {
     // width: 200px;
+    position: absolute;
     border-radius: 20px;
     height: fit-content;
     background-color: #fff;
@@ -21,9 +21,21 @@
     flex-direction: column;
     align-items: center;
     gap: 50px;
+    z-index: 1000;
     .__buttons {
       display: flex;
       gap: 50px;
+    }
+  }
+  @media only screen and (max-width: 1200px) {
+    .__modal {
+      width: 90%;
+      font-size: 13px;
+      gap: 30px;
+      padding: 30px 20px;
+      .__buttons {
+        gap: 10px;
+      }
     }
   }
 }

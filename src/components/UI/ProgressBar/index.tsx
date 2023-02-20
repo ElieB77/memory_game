@@ -4,20 +4,30 @@ import {
   setGameStatus,
   setIsTimeUp,
   setScore,
-} from "../../../features/session/sessionSlice";
+} from "../../../redux/session/sessionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
 
+interface ProgressBarState {
+  timeRemaining: number;
+  score: number;
+}
+
 const ProgressBar = () => {
-  const chrono = useSelector((state: RootState) => state.session.chrono);
-  const status = useSelector((state: RootState) => state.session.status);
-  const [timeRemaining, setTimeRemaining] = useState<number>(chrono);
-  const [score, setScoreState] = useState<any>(0);
+  const { chrono, status } = useSelector((state: RootState) => ({
+    chrono: state.session.chrono,
+    status: state.session.status,
+  }));
   const dispatch = useDispatch();
+  const [{ timeRemaining, score }, setProgressBarState] =
+    useState<ProgressBarState>({ timeRemaining: chrono, score: 0 });
 
   useEffect(() => {
     if (status === "win") {
-      setScoreState(timeRemaining);
+      setProgressBarState((prevState) => ({
+        ...prevState,
+        score: timeRemaining,
+      }));
       dispatch(setScore(score));
     }
   }, [status]);
@@ -32,14 +42,20 @@ const ProgressBar = () => {
     }
 
     const timer = setTimeout(() => {
-      setTimeRemaining((timeRemaining) => timeRemaining - 1);
+      setProgressBarState((prevState) => ({
+        ...prevState,
+        timeRemaining: prevState.timeRemaining - 1,
+      }));
     }, 1000);
 
     return () => clearTimeout(timer);
   }, [timeRemaining]);
 
   useEffect(() => {
-    setTimeRemaining(chrono);
+    setProgressBarState((prevState) => ({
+      ...prevState,
+      timeRemaining: chrono,
+    }));
   }, [chrono, status]);
 
   const progressPercentage = ((chrono - timeRemaining) / chrono) * 100;

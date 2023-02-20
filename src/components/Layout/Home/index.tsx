@@ -2,13 +2,13 @@ import Button from "../../UI/Button";
 import Input from "../../UI/Input";
 import styles from "./styles.module.scss";
 import { useDispatch } from "react-redux";
-import { rendering } from "../../../features/render/renderSlice";
-import { storeUsername } from "../../../features/user/userSlice";
-import { useState } from "react";
-import { setGameStatus } from "../../../features/session/sessionSlice";
+import { rendering } from "../../../redux/render/renderSlice";
+import { storeUsername } from "../../../redux/user/userSlice";
+import { ChangeEvent, useState } from "react";
+import { setGameStatus } from "../../../redux/session/sessionSlice";
 
 const Home = () => {
-  const [name, setName] = useState<string>();
+  const [name, setName] = useState<string>("");
   const dispatch = useDispatch();
 
   const handleClick = () => {
@@ -21,7 +21,7 @@ const Home = () => {
     <div className={styles.__home}>
       <Input
         placeholder="Entrez votre nom"
-        onChange={(e: any) => setName(e.target.value)}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
       />
       <Button content="PLAY" onClick={handleClick} />
     </div>

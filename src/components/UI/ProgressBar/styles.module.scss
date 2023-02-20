@@ -16,4 +16,12 @@
     min-width: 0.1px;
     max-width: 100%;
   }
+  @media only screen and (max-width: 760px) {
+    width: 90%;
+    height: 30px;
+  }
+  @media only screen and (max-height: 900px) {
+    height: 20px;
+    border-width: 2px;
+  }
 }

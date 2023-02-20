@@ -1,9 +1,9 @@
 // This creates a Redux store, and also automatically configure the Redux DevTools extension so that you can inspect the store while developing.
 
 import { configureStore } from "@reduxjs/toolkit";
-import renderReducer from "../features/render/renderSlice";
-import userReducer from "../features/user/userSlice";
-import sesionReducer from "../features/session/sessionSlice";
+import renderReducer from "../redux/render/renderSlice";
+import userReducer from "../redux/user/userSlice";
+import sesionReducer from "../redux/session/sessionSlice";
 
 export const store = configureStore({
   reducer: {

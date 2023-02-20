@@ -1,16 +1,24 @@
 .container {
   width: 1200px;
   margin: 0 auto;
+  @media only screen and (max-width: 1300px) {
+    width: 90%;
+  }
 }
 .app {
   background: url(../assets/images/super-mario/mario-cover-2.jpeg);
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   background-size: cover;
   position: relative;
+  background-repeat: no-repeat;
+  @media only screen and (max-width: 600px) {
+    // background-size: contain;
+    background-position: 80% 0%;
+  }
 }
 .credit {
-  padding: 0 20px 0 3px;
+  padding: 0 20px 0 0;
   position: absolute;
   color: var(--lightest-color);
   bottom: 2%;
@@ -20,12 +28,19 @@
   gap: 10px;
   cursor: pointer;
   background-color: var(--darkest-color);
+  border: solid 5px var(--dark-color);
+  border-radius: 25px;
+  overflow: hidden;
   &:hover {
     color: var(--bright-color);
   }
   & img {
     width: 30px;
+    border-radius: 50%;
     filter: invert(22%) sepia(68%) saturate(2552%) hue-rotate(344deg)
       brightness(99%) contrast(105%);
+  }
+  @media only screen and (max-width: 760px) {
+    font-size: 10px;
   }
 }

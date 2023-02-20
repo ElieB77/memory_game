@@ -1,4 +1,3 @@
-import React from "react";
 import Game from "./components/Layout/Game";
 import Home from "./components/Layout/Home";
 import "./styles/globals.scss";
@@ -11,11 +10,7 @@ function App() {
 
   return (
     <div className="app">
-      <div className="container">
-        {render === "home" ? <Home /> : <Game />}
-
-        {/* <Home /> */}
-      </div>
+      <div className="container">{render === "home" ? <Home /> : <Game />}</div>
       <a href="https://github.com/ElieB77" target={"_blank"} rel="noreferrer">
         <p className="credit">
           <span>

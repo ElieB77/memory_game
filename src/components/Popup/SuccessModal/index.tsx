@@ -5,8 +5,8 @@ interface SuccessModalProps {
   content?: string;
   firstBtnContent?: string;
   secondBtnContent?: string;
-  firstBtnOnCLick?: any;
-  secondBtnOnClick?: any;
+  firstBtnOnCLick?: React.MouseEventHandler<HTMLButtonElement>;
+  secondBtnOnClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const SuccessModal = ({

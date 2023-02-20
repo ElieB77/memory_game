@@ -1,12 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface SessionState {
   status: string;
   isTimeUp: boolean;
   chrono: number;
-  score: any;
-  bestScore: any;
+  score: number;
+  bestScore: number;
 }
 
 const initialState: SessionState = {

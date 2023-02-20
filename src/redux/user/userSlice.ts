@@ -1,12 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface UserState {
   userName: string;
 }
 
 const initialState: UserState = {
-  userName: "Player 1",
+  userName: "Player1",
 };
 
 export const userSlice = createSlice({

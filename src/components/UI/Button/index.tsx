@@ -1,9 +1,9 @@
 import styles from "./styles.module.scss";
 import PlayIcon from "../../../assets/images/play-icon.svg";
 
-interface ButtonProps {
+export interface ButtonProps {
   content?: string;
-  onClick?: any;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   small?: boolean;
 }
 

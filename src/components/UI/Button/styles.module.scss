@@ -27,10 +27,14 @@
       margin-right: 20px;
       filter: invert(100%) sepia(100%) saturate(1%) hue-rotate(207deg)
         brightness(102%) contrast(102%);
-      // &:hover {
-      //   filter: invert(22%) sepia(53%) saturate(3617%) hue-rotate(208deg)
-      //     brightness(92%) contrast(110%);
-      // }
+    }
+  }
+  @media only screen and (max-width: 600px) {
+    & button {
+      font-size: 20px;
+      & img {
+        width: 20px;
+      }
     }
   }
 }
@@ -47,6 +51,16 @@
     }
     & img {
       display: none;
+    }
+  }
+  @media only screen and (max-width: 600px) {
+    & button {
+      font-size: 15px;
+    }
+  }
+  @media only screen and (max-height: 900px) {
+    & button {
+      font-size: 10px;
     }
   }
 }
