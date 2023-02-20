@@ -88,10 +88,11 @@
     }
     .__cards_container {
       width: 100%;
+      width: 350px !important;
       gap: 5px;
       .__card {
-        width: 80px !important;
-        height: 80px !important;
+        width: 75px !important;
+        height: 75px !important;
         &:hover {
           box-shadow: none;
         }
@@ -99,7 +100,7 @@
     }
   }
 
-  @media only screen and (max-height: 900px) {
+  @media only screen and (max-height: 900px) and (min-width: 761px) {
     gap: 10px;
     .__head {
       transform: translateY(20px);
